@@ -31,7 +31,7 @@
 }
 
 .floating-blob {
-  @apply absolute rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse;
+  @apply absolute rounded-full mix-blend-multiply filter blur-3xl opacity-30;
 }
 
 @keyframes float {

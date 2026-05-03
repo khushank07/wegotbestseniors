@@ -14,27 +14,10 @@ import { UnsaidThings } from "./components/UnsaidThings";
 import { WishingWell } from "./components/WishingWell";
 import { ForeverSection } from "./components/ForeverSection";
 import { BackgroundBlobs } from "./components/BackgroundBlobs";
-import { Sparkle } from "lucide-react";
+import { SparkleCursor } from "./components/SparkleCursor";
 
 export default function App() {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [sparkles, setSparkles] = useState<{ id: number; x: number; y: number }[]>([]);
-
-  // Custom sparkle cursor logic
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (Math.random() > 0.95) { // Only create sparkles occasionally
-        const id = Date.now();
-        setSparkles(prev => [...prev, { id, x: e.clientX, y: e.clientY }]);
-        setTimeout(() => {
-          setSparkles(prev => prev.filter(s => s.id !== id));
-        }, 800);
-      }
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
 
   return (
     <div className="relative selection:bg-peach/30 selection:text-gray-900 cursor-default overflow-x-hidden">
@@ -66,21 +49,7 @@ export default function App() {
         </motion.div>
       )}
 
-      {/* Sparkle Cursor Particles */}
-      <AnimatePresence>
-        {sparkles.map(s => (
-          <motion.div
-            key={s.id}
-            initial={{ opacity: 1, scale: 0, rotate: 0 }}
-            animate={{ opacity: 0, scale: 1.5, rotate: 90 }}
-            exit={{ opacity: 0 }}
-            className="fixed pointer-events-none z-[9999] text-peach shadow-glow"
-            style={{ left: s.x, top: s.y }}
-          >
-            <Sparkle size={12} fill="currentColor" />
-          </motion.div>
-        ))}
-      </AnimatePresence>
+      <SparkleCursor />
 
       <style>{`
         .shadow-glow {
